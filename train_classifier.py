@@ -1,3 +1,5 @@
+#Need to be expanded at a later stage
+
 from app.services.classifier import DocumentClassifier
 
 texts = [
