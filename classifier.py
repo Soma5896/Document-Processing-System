@@ -24,7 +24,7 @@ class DocumentClassifier:
         probabilities = self.pipeline.predict_proba([text])[0]
         predicted_class = self.pipeline.predict([text])[0]
         confidence = max(probabilities)
-        return {'category': predicted_category, 'confidence': confidence}
+        return {'category': predicted_class, 'confidence': confidence}
 '''
         return {
             'category': predicted_class,
