@@ -1,53 +1,89 @@
-# Document-Processing-System
+# Intelligent Document Processing System
 
-doc-project/
+This project is an AI-powered system that extracts structured information from unstructured documents such as invoices, resumes, and legal contracts using OCR, NLP, and machine learning.
+
+---
+
+## 🚀 Features
+
+- 📄 **OCR**: Text extraction from images using Tesseract and OpenCV
+- 🧠 **Classification**: Categorize documents into `invoice`, `resume`, `contract`, etc.
+- 🔍 **Information Extraction**:
+  - Invoice fields: Vendor, Customer, Invoice Number, Line Items, Dates
+  - Resume fields: Name, Email, Phone, Skills, Companies, Education
+  - Contract fields: Parties, Dates, Amounts, Terms
+- 🌐 **Multi-format Support**: `.pdf`, `.docx`, `.txt`, `.jpg`, `.png`
+- 📦 **FastAPI Backend**: Exposes `/process/` endpoint for document upload and processing
+
+---
+
+## 🧱 Project Structure
+
+```
+project-root/
 │
 ├── app/
-│   ├── __init__.py
-│   ├── main.py                # FastAPI app entry point
-│   ├── api.py                 # Unified API: OCR + text extraction + classification
 │   ├── services/
-│   │   ├── __init__.py
-│   │   ├── ocr_service.py     # (Optional, if OCR is separated here)
-│   │   ├── classifier.py      # TF-IDF + SVM classifier logic
-│   │   └── document_classifier.pkl  # Trained classifier model
-│   └── uploads/               # Stores uploaded files
+│   │   ├── ocr_service.py
+│   │   ├── classifier.py
+│   │   ├── information_extractor.py
+│   ├── uploads/
+│   └── api.py
 │
-├── train_classifier.py        # Script to train classifier & generate .pkl
-├── requirements.txt           # Dependencies
-├── README.md                  # (optional) Project documentation
+├── main.py
+└── README.md
+```
 
+---
 
+## 🛠️ Installation
 
+1. Clone this repo  
+2. Install dependencies:
 
+```bash
+pip install -r requirements.txt
+```
 
-for entire project:
+3. Install [Tesseract OCR](https://github.com/tesseract-ocr/tesseract)
 
-doc-project/
-│
-├── app/
-│   ├── __init__.py
-│   ├── main.py                 # FastAPI app entry point
-│   ├── api.py                  # All API endpoints
-│   │
-│   ├── services/               # Core logic components
-│   │   ├── __init__.py
-│   │   ├── ocr_service.py      # Image OCR logic
-│   │   ├── classifier.py       # Document Classification logic
-│   │   └── text_extractor.py   # Extract text from PDFs, TXT, DOCX
-│   │
-│   ├── models/                 # (Optional for DB models in future)
-│   │   ├── __init__.py
-│   │   └── document_model.py
-│   │
-│   ├── uploads/                # Folder to store uploaded files
-│
-├── models/                     # Pre-trained ML models
-│   └── document_classifier.pkl # Trained SVM classifier
-│
-├── train_classifier.py         # Script to train & save the classifier
-│
-├── requirements.txt            # Project dependencies
-├── README.md                   # Project documentation
-└── .gitignore                  # To exclude uploads, .pkl, __pycache__
+---
 
+## 🧪 Run the App
+
+```bash
+uvicorn main:app --reload
+```
+
+Then open: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+
+---
+
+## 📥 Upload Example
+
+```bash
+curl -X POST -F "file=@example_invoice.pdf" http://127.0.0.1:8000/process/
+```
+
+---
+
+## 📚 Sample Outputs
+
+```json
+{
+  "category": "invoice",
+  "extracted_text": "...",
+  "entities": {
+    "vendor_name": "Acme Corp",
+    "invoice_number": "INV-1234",
+    ...
+  }
+}
+```
+
+---
+
+## 📌 Notes
+
+- Be sure to include good quality images for OCR
+- Extendable for more document types (e.g. medical, forms, ID cards)
